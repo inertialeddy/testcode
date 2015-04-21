@@ -22,7 +22,7 @@ ls modules/IFORT/
 You should see a bunch of files in both these directories. If you want to be doubly sure these were not lying around from before the compilation, 
 delete these libraries (and modules) and go through the compilation steps once again (starting from "cd gotm_allfiles").
 
--------------------------------------PRECIPITATION AND EVAPORATION FLUXES--------------------------------
+------PRECIPITATION AND EVAPORATION FLUXES--------------
 
 THESE CHANGES HAVE BEEN IMPLEMENTED ONLY IN CASE_IDEAL_DOWNFRONT, NOT IN THE OTHER TEST CASES. THEY WILL BE EVENTUALLY.
 
