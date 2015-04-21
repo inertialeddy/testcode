@@ -24,6 +24,8 @@ delete these libraries (and modules) and go through the compilation steps once a
 
 -------------------------------------PRECIPITATION AND EVAPORATION FLUXES--------------------------------
 
+THESE CHANGES HAVE BEEN IMPLEMENTED ONLY IN CASE_IDEAL_DOWNFRONT, NOT IN THE OTHER TEST CASES. THEY WILL BE EVENTUALLY.
+
 These are set in fluxes.f90 using the variables 'swr', 'qloss', 'qlatent' and 'rainrate', defined as follows:
 
 swr=  shortwave (W/m^2)
