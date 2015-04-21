@@ -1,0 +1,24 @@
+
+fcomp=ifort
+
+define_netcdf=T
+
+
+dirc=/home/sr71d/PSOM/github/psom-gotm/psom_v05
+
+netcdf_dir_lib=-L/share/pkg/netcdf/4.3.0/lib -L/home/sr71d/PSOM/github/psom-gotm/gotm-ifort/lib/IFORT/ -lturbulence_prod -lutil_prod -lmeanflow_prod
+netcdf_dir_inc=-I/share/pkg/netcdf/4.3.0/include -I/home/sr71d/PSOM/github/psom-gotm/gotm-ifort/modules/IFORT
+netcdf_lnk_flag=-lnetcdff -lnetcdf
+
+lobj_general=relaxation.o analytic_eval.o main.o ini_setup.o ini_h.o ini_tracer.o write_bin_mod.o momentum.o potdens.o facediv.o intpol_3rdorder.o srcface_3rdorder.o vcenter.o vface.o advect.o advection_and_mixing.o cdiv.o cpcors.o cpfine.o efill.o mgrid.o prolong.o resid.o restrict.o mgpfill.o pbc.o sor.o spline.o seval.o sigma_toplayer.o staticsigma.o hsolve.o hfill.o chfine.o hbc.o vhydro.o evalrho_sT.o evalrho_rho.o evalrho.o psolve.o uvchy.o newcor.o newsrc.o coriolis.o hsave.o smooth.o setbc.o linerelax_periodicew.o dgtsl.o diag_energy.o findz_topmoves.o meanh.o rpevalgrad_Song.o correctbc.o conadjust_sT.o mixing_vertical.o solve_tridiag.o shearn2.o fluxes.o checks.o ini_uv.o ran3.o  mprove.o dgtsv.o pcorrect.o  diag_vort.o calcskfc.o cfdiv.o mixing_horizontal.o mixing_isopycnal.o mixing_isopycnal_biharmonic.o srcface_nopy.o tracersource_nut.o diag_streamfunction.o diag_n2budget.o diag_n2.o diag_pv.o sigma2z.o ini_st.o utils.o write_bin.o ini_topog.o rpevalgrad_Sche.o findsigma.o
+lobj_netcdf=write_cdf_2D_geopotential.o write_cdf.o write_cdf_1D_mooring.o write_cdf_2D_x.o write_cdf_2D_y.o write_cdf_2D_sigma.o write_cdf_2D_isopycnal.o write_cdf_3D_strain.o write_cdf_3D.o 
+lobj_gotm=init_tke.o couple_gotm.o rst_tke.o  
+
+lmod=header.mod particles.mod
+
+
+lobj_additional=sponge.o comp_volume.o comp_field_vol_integral.o restore_bndry.o
+ 
+dir_alt=asiri_18N_288x576x64_KPP
+ 
+compil_status=OK

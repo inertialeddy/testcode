@@ -29,9 +29,10 @@ integer, intent(in)     ::  I,J
 
 !!! Local variables
 integer                 ::  iii, ic
+integer                 ::  jmin,jmax,kmin,kmax,y1,y2  
 !!! 
 integer                 ::  k, MaxItz0b 
-REAL(kind=rc_kind)      ::  charnockval, rrb, clip,epsovertke 
+REAL(kind=rc_kind)      ::  charnockval, rrb, clip,eddyvol,epsovertke 
 
 !!!! layer thickness (resolution), shear frequency, sea grass tke(irrelevant), buoyancy frequency
 !REAL(kind=rc_kind), dimension(  0:NK  )  :: thk, SS2, TKEP, NN1d
@@ -118,7 +119,7 @@ TKEP(:) = 0E0
 
 !!! Calculate surface roughness length. Surface friction velocity is known already.
 !!! Initialize the wind stress profile
-u_fric(I,J) = (sqrt(stressx(J)*stressx(J) + stressy(J)*stressy(J))/R0)**0.5
+u_fric(I,J) = (sqrt(stressx(J)*stressx(J) + stressy(J)*stressy(J))/1027.d0)**0.5
 
 !IF (I.eq.(NI/2) .AND. J.eq.(NJ/2))
 !  write(6,*) 'Validation- friction velocity'
@@ -171,47 +172,46 @@ z0b_gotm = 0.d0
 call do_turbulence(NK, gotm_dt, dpth, u_fric(I,J), u_taub, z0s_gotm, z0b_gotm, thk, NN1d, SS2, TKEP)
 !-----------------------------------
 !!!WRITE OUT THE TERMS IN THE EPSILON EQUATION: (EQ. 163) IN MANUAL 
+if (ivb==3) then 
+   do k=1,NK
+     depsdz(k)=(num(k)/sig_e)*(eps1d(k)-eps1d(k-1))/thk(k)
+   end do
+   k=1 
+    D_eps(i,j,k)=(depsdz(2)-depsdz(1))/thk(k)
+   do k=2,NK-1
+    D_eps(i,j,k)=0.5*(depsdz(k+1)-depsdz(k-1))/thk(k) 
+   end do
+   k=NK
+    D_eps(i,j,k)=(depsdz(NK)-depsdz(NK-1))/thk(k) 
 
-!if (ivb==3) then 
-!   do k=1,NK
-!     depsdz(k)=(num(k)/sig_e)*(eps1d(k)-eps1d(k-1))/thk(k)
-!   end do
-!   k=1 
-!    D_eps(i,j,k)=(depsdz(2)-depsdz(1))/thk(k)
-!   do k=2,NK-1
-!    D_eps(i,j,k)=0.5*(depsdz(k+1)-depsdz(k-1))/thk(k) 
-!   end do
-!   k=NK
-!    D_eps(i,j,k)=(depsdz(NK)-depsdz(NK-1))/thk(k) 
-!
-!
-!    do k=1,NK
-!     epsovertke=eps1d(k)/tke(k) 
-!     eps_shear(i,j,k)= ce1*epsovertke*P1d(k)
-!     eps_buoy(i,j,k) = ce3*epsovertke*B1d(k)
-!     eps_dest(i,j,k) = ce2*epsovertke*eps1d(k) 
-!    end do 
-!
-!   do k=1,NK
-!     dkdz(k)=(num(k)/sig_k)*(tke(k)-tke(k-1))/thk(k)
-!   end do
-!   k=1 
-!    D_tke(i,j,k)=(dkdz(k+1)-dkdz(k))/thk(k)
-!   do k=2,NK-1
-!    D_tke(i,j,k)=0.5*(dkdz(k+1)-dkdz(k-1))/thk(k) 
-!   end do
-!   k=NK
-!    D_tke(i,j,k)=(dkdz(k)-dkdz(k-1))/thk(k) 
-!
-!   do k=1,NK
-!     sgs_shear(i,j,k)=P1d(k)
-!     sgs_buoy(i,j,k) =B1d(k)
-!     sgs_dest(i,j,k) =eps1d(k) 
-!   end do 
-!
-!
-!
-!endif 
+
+    do k=1,NK
+     epsovertke=eps1d(k)/tke(k) 
+     eps_shear(i,j,k)= ce1*epsovertke*P1d(k)
+     eps_buoy(i,j,k) = ce3*epsovertke*B1d(k)
+     eps_dest(i,j,k) = ce2*epsovertke*eps1d(k) 
+    end do 
+
+   do k=1,NK
+     dkdz(k)=(num(k)/sig_k)*(tke(k)-tke(k-1))/thk(k)
+   end do
+   k=1 
+    D_tke(i,j,k)=(dkdz(k+1)-dkdz(k))/thk(k)
+   do k=2,NK-1
+    D_tke(i,j,k)=0.5*(dkdz(k+1)-dkdz(k-1))/thk(k) 
+   end do
+   k=NK
+    D_tke(i,j,k)=(dkdz(k)-dkdz(k-1))/thk(k) 
+
+   do k=1,NK
+     sgs_shear(i,j,k)=P1d(k)
+     sgs_buoy(i,j,k) =B1d(k)
+     sgs_dest(i,j,k) =eps1d(k) 
+   end do 
+
+
+
+endif 
 
 
  

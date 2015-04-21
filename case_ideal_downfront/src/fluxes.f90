@@ -98,7 +98,7 @@ subroutine fluxes(step)
   J_A = 0.62d0      
 !-----------------------------------
 
-!--This part deals with short wave radiation (swr), qloss = Qnet - shortwave, qlatent = Latent heat loss, rainrate = precipitation (mm/hr) 
+!--This part deals with short wave radiation (swr) in W/m^2, qloss = Qnet - shortwave (in W/m^2), qlatent = Latent heat loss (in W/m^2), rainrate = precipitation (mm/hr) 
   swr = 0.d0
   qloss = 0.d0
   qlatent=0.d0
