@@ -23,6 +23,7 @@ You should see a bunch of files in both these directories. If you want to be dou
 delete these libraries (and modules) and go through the compilation steps once again (starting from "cd gotm_allfiles").
 
 -------------------------------------PRECIPITATION AND EVAPORATION FLUXES--------------------------------
+
 These are set in fluxes.f90 using the variables 'swr', 'qloss', 'qlatent' and 'rainrate', defined as follows:
 
 swr=  shortwave (W/m^2)
